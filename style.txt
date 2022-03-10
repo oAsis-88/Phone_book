@@ -53,6 +53,9 @@ QLineEdit:focus {
     border-radius: 17px;
     border-color: #919191;
 }
+.QCheckBox{
+    spacing: 5px;
+}
 #Name{
     /*background-color: #fff;*/
     color: green;
