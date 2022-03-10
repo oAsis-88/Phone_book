@@ -16,6 +16,10 @@ class UpdateUser(QWidget):
         self.table_contact = table_contact
         self.initializeUI()
 
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
     def initializeUI(self):
         self.setFixedSize(170, 150)
         vbox = QVBoxLayout()
@@ -32,8 +36,10 @@ class UpdateUser(QWidget):
 
         hbox = QHBoxLayout()
         ok = QPushButton("Ok")
+        ok.setObjectName("BtnGreen")
         ok.clicked.connect(self.event_ok)
         cancel = QPushButton("Close")
+        cancel.setObjectName("BtnRed")
         cancel.clicked.connect(self.event_close)
         hbox.addWidget(ok)
         hbox.addWidget(cancel)

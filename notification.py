@@ -8,42 +8,6 @@ from PyQt5.QtWidgets import *
 
 from mariaDB_contacts import MariaDBContacts
 
-# Set up style sheet for the entire GUI
-style_sheet = """
-    #Contacts{
-        background-color: #EFD096;
-        border-width: 8px;
-        border-style: solid;
-        border-radius: 10px;
-        border-color: #EFD096;
-        border: 3px solid #fff;
-        
-    }
-    #Contacts:hover{
-        border-radius: 17px;
-        border-color: #666;
-    }
-    #Name{        
-        
-        /*background-color: #fff;*/
-        color: green;
-        font-weight: bold;
-        font-size: 14px;
-        
-    }
-    #Phone{    
-        font-weight: bold;
-        
-    }
-    #Birth{        
-        color: red;
-        font-weight: bold;
-        font-size: 12px;
-        
-    }
-    
-"""
-
 
 class Notification(QDialog):
     def __init__(self, user_, contacts_, *args, **kwargs):
@@ -51,8 +15,11 @@ class Notification(QDialog):
         self.user_ = user_
         self.contacts_ = contacts_
         self.maria_contacts = MariaDBContacts()
-        self.setStyleSheet(style_sheet)
         self.initializeUI()
+
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
 
     def initializeUI(self):
         """ Initialize thw window and display its contents to the screen (Password recovery) """

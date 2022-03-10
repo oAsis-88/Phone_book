@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton
 
 
@@ -10,9 +11,13 @@ class PasswordRecovery(QWidget):
         """ Initialize thw window and display its contents to the screen (Password recovery) """
         self.setFixedSize(320, 260)
         self.setWindowTitle('Восстановление пароля')
+        self.setWindowModality(Qt.ApplicationModal)
         self.displayLineEdit()
         self.displayButton()
 
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
         self.show()
 
     def displayLineEdit(self):
@@ -25,11 +30,13 @@ class PasswordRecovery(QWidget):
     def displayButton(self):
         """ Display Button (change password, cancel) """
         btn_change_password = QPushButton("Сменить пароль", self)
+        btn_change_password.setObjectName('BtnGreen')
         btn_change_password.resize(100, 25)
         btn_change_password.move(50, 135)
         btn_change_password.clicked.connect(self.event_btn_change_password)
 
         btn_cancel = QPushButton("Отмена", self)
+        btn_cancel.setObjectName('BtnRed')
         btn_cancel.resize(110, 25)
         btn_cancel.move(160, 135)
         btn_cancel.clicked.connect(self.event_btn_cancel)

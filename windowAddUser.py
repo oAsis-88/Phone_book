@@ -11,6 +11,10 @@ class AddUser(QDialog):
         self.table_contact = table_contact
         self.initializeUI()
 
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
     def initializeUI(self):
         self.setFixedSize(170, 150)
         vBox = QVBoxLayout(self)
@@ -22,11 +26,13 @@ class AddUser(QDialog):
         self.birth.setDisplayFormat('yyyy-MM-dd')
         hBox = QHBoxLayout()
         ok = QPushButton("Ok")
+        ok.setObjectName("BtnGreen")
         ok.clicked.connect(self.event_ok)
-        close = QPushButton("Close")
-        close.clicked.connect(self.event_close)
+        cancel = QPushButton("Close")
+        cancel.setObjectName("BtnRed")
+        cancel.clicked.connect(self.event_close)
         hBox.addWidget(ok)
-        hBox.addWidget(close)
+        hBox.addWidget(cancel)
         vBox.addWidget(self.name)
         vBox.addWidget(self.phone)
         vBox.addWidget(self.birth)

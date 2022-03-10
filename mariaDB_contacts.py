@@ -58,33 +58,9 @@ class MariaDBContacts():
                 self.connection.commit()
                 return True
             return False
-
-
-            # sql = f"SELECT user, name, phone, birth FROM contacts WHERE user='{user_}' AND name='{old_name_}' AND phone='{phone_}' AND birth='{birth_}'"
-            # self.cursor.execute(sql)
-            # result = self.cursor.fetchall()
-            # print("1 -", result)
-            # if not result:
-            #     pass
-            #
-            # # print('data -', user_, old_name_, new_name_, phone_, birth_)
-            # sql = f"select count(*) FROM contacts WHERE name='{new_name_}'"
-            # self.cursor.execute(sql)
-            # result = self.cursor.fetchall()
-            # print("2 -", result)
-            #
-            # # sql = f"UPDATE contacts SET name='{new_name_}', phone='{phone_}', birth='{birth_}' " \
-            # #       f"WHERE user='{user_}' AND name='{old_name_}'" \
-            # #       f" AND EXISTS (SELECT name FROM contacts WHERE name='{new_name_}' OR phone='{phone_}' OR birth='{birth_}')"
-            # sql = f"UPDATE contacts SET name='{new_name_}', phone='{new_phone_}', birth='{new_birth_}' WHERE user='{user_}' AND name='{old_name_}'"
-            # # EXISTS(SELECT id FROM table WHERE id = 1)
-            # self.cursor.execute(sql)
-            # self.connection.commit()
-            # print(f'update user - {user_}, {old_name_}\nnew - {new_name_}, {phone_}, {birth_}')
         except mariadb.Error as e:
             print(f"Error: {e}")
             print(f"MariaDB contacts: not updated")
-            # print(f"MariaDB contacts: '{user_}', '{name_}', '{phone_}', '{birth_}' not updated")
             sys.exit(1)
 
     def remove(self, user_, name_, phone_, birth_):
@@ -92,7 +68,6 @@ class MariaDBContacts():
             sql = f"DELETE FROM contacts WHERE user='{user_}' AND name='{name_}' AND phone='{phone_}' AND birth='{birth_}'"
             self.cursor.execute(sql)
             self.connection.commit()
-            # print(f'user - {user_}, {name_} removed')
         except mariadb.Error as e:
             print(f"Error: {e}")
             print(f"MariaDB contacts: '{user_}', '{name_}' not removed")
@@ -169,30 +144,12 @@ class MariaDBContacts():
             sys.exit(1)
 
     def count_users(self, user_, char_):
-        # print(tuple(char_))
-        # sql = f"SELECT COUNT(*) as count FROM contacts WHERE user='{user_}' AND name BETWEEN '{char_[0]}' AND '{char_[-1]}'"
-        # sql = f"SELECT COUNT(*) as count FROM contacts WHERE user='{user_}' AND name IN {tuple(char_)}"
         result = 0
         for i in list(char_):
-            # print(i, end=" ")
             sql = f"SELECT COUNT(*) as count FROM contacts WHERE user='{user_}' AND name LIKE '{i}%'"
             self.cursor.execute(sql)
             result += self.cursor.fetchall()[0][0]
-        # print(f"Кол-во users ({char_}) - ", result)
         return result
-
-
-    # def getALL(self, user):
-    #     try:
-    #         data = [(x,) for x in user]
-    #         sql = "SELECT * FROM contacts ORDER BY user"
-    #         self.cursor.executemany(sql, data)
-    #         result = self.cursor.fetchall()
-    #         print(result)
-    #     except mariadb.Error as e:
-    #         print(f"Error: {e}")
-    #         print(f"MariaDB contacts: '{user}' not found (get)")
-    #         sys.exit(1)
 
     def printAllTableUser(self, user_):
         try:

@@ -24,7 +24,6 @@ class MariaDBUsers():
                 autocommit=True
             )
             self.cursor = self.connection.cursor()
-            # print("---- connecting to MariaDB users ----")
         except mariadb.Error as e:
             print(f"Error: {e}")
             print(f"not connecting to MariaDB users Platform")
@@ -47,7 +46,6 @@ class MariaDBUsers():
             data = [(password, user)]
             self.cursor.executemany(sql, data)
             self.connection.commit()
-            # print(f'user - {user}\nnew password - {password}')
         except mariadb.Error as e:
             print(f"Error: {e}")
             print(f"MariaDB users: '{user}', '{password}' not updated")
@@ -79,15 +77,7 @@ class MariaDBUsers():
         try:
             sql = f"SELECT user, password FROM users WHERE user='{user}'"
             self.cursor.execute(sql)
-            # for el in self.cursor.fetchall():
-            #     print(el)
-
-            # data = [(x,) for x in user]
-            # sql = "SELECT * FROM users ORDER BY user"
-            # self.cursor.executemany(sql, data)
-            # self.cursor.execute(sql)
             result = self.cursor.fetchall()
-            # print(result)
             return result
         except mariadb.Error as e:
             print(f"Error: {e}")
@@ -106,18 +96,6 @@ class MariaDBUsers():
             print(f"Error: {e}")
             print(f"MariaDB users: '{user_}' not found (get)")
             sys.exit(1)
-
-    # def getALL(self, user):
-    #     try:
-    #         data = [(x,) for x in user]
-    #         sql = "SELECT * FROM users ORDER BY user"
-    #         self.cursor.executemany(sql, data)
-    #         result = self.cursor.fetchall()
-    #         print(result)
-    #     except mariadb.Error as e:
-    #         print(f"Error: {e}")
-    #         print(f"MariaDB users: '{user}' not found (get)")
-    #         sys.exit(1)
 
     def printAllTable(self):
         try:

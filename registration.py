@@ -16,27 +16,32 @@ class Registration(QWidget):
         """ Initialize thw window and display its contents to the screen (Registration) """
         self.setFixedSize(320, 260)
         self.setWindowTitle('Регистрация')
+        self.setWindowModality(Qt.ApplicationModal)
         self.displayLineEdit()
         self.displayBirthCalendar()
         self.displayButton()
+
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
 
         self.show()
 
     def displayLineEdit(self):
         """ Display Line Edit (user name, password, repeat password) """
         self.user_name = QLineEdit(self)
-        self.user_name.setPlaceholderText(' Имя пользователя')
+        self.user_name.setPlaceholderText('Имя пользователя')
         self.user_name.resize(220, 30)
         self.user_name.move(50, 30)
 
         self.password = QLineEdit(self)
-        self.password.setPlaceholderText(' Пароль')
+        self.password.setPlaceholderText('Пароль')
         self.password.resize(220, 30)
         self.password.move(50, 75)
         self.password.setEchoMode(QLineEdit.Password)
 
         self.repeat_password = QLineEdit(self)
-        self.repeat_password.setPlaceholderText(' Повторите пароль')
+        self.repeat_password.setPlaceholderText('Повторите пароль')
         self.repeat_password.resize(220, 30)
         self.repeat_password.move(50, 120)
         self.repeat_password.setEchoMode(QLineEdit.Password)
@@ -51,11 +56,13 @@ class Registration(QWidget):
     def displayButton(self):
         """ Display Button (ok, cancel) """
         btn_ok = QPushButton("Ок", self)
+        btn_ok.setObjectName("BtnGreen")
         btn_ok.resize(100, 25)
         btn_ok.move(50, 210)
         btn_ok.clicked.connect(self.event_btn_ok)
 
         btn_cancel = QPushButton("Отмена", self)
+        btn_cancel.setObjectName("BtnRed")
         btn_cancel.resize(110, 25)
         btn_cancel.move(160, 210)
         btn_cancel.clicked.connect(self.event_btn_cancel)

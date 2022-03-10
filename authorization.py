@@ -1,6 +1,6 @@
 # authorization.py
 
-from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton, QCheckBox, QLabel, QMessageBox
+from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton, QCheckBox, QLabel, QMessageBox, QGraphicsDropShadowEffect
 from PyQt5.QtCore import Qt
 from passwordRecovery import PasswordRecovery
 from registration import Registration
@@ -23,33 +23,40 @@ class Authorization(QWidget):
         self.displayCheckBox()
         self.displayLine()
 
+        with open("style.txt", 'r') as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
         self.show()
 
     def displayLineEditor(self):
         """ Display Line Editor with placeholder (Username, Password) """
         self.user_name = QLineEdit(self)
-        self.user_name.setPlaceholderText(" Имя пользователя")
+        self.user_name.setPlaceholderText("Имя пользователя")
         self.user_name.move(50, 30)
         self.user_name.resize(235, 30)
 
         self.password = QLineEdit(self)
-        self.password.setPlaceholderText(" Пароль")
+        self.password.setPlaceholderText("Пароль")
         self.password.move(50, 70)
         self.password.resize(235, 30)
 
     def displayButton(self):
         """ Display Button (sign in, sign up, cancel) """
         sign_in = QPushButton('Войти', self)
+        sign_in.setObjectName("BtnGreen")
         sign_in.move(15, 110)
         sign_in.resize(95, 25)
         sign_in.clicked.connect(self.event_sign_in)
 
         sign_up = QPushButton('Регистрация', self)
+        sign_up.setObjectName("BtnGray")
         sign_up.move(115, 110)
         sign_up.resize(95, 25)
         sign_up.clicked.connect(self.event_sign_up)
 
         cancel = QPushButton('Отмена', self)
+        cancel.setObjectName("BtnRed")
         cancel.move(215, 110)
         cancel.resize(95, 25)
         cancel.clicked.connect(self.event_cancel)
@@ -58,7 +65,6 @@ class Authorization(QWidget):
         """ Display CheckBox (Remember, Show password) """
         self.remember = QCheckBox('Запомнить меня', self)
         self.remember.move(70, 150)
-        # self.remember.stateChanged.connect(self.event_remember)
         self.remember.toggle()
         self.remember.setChecked(False)
 
@@ -72,10 +78,6 @@ class Authorization(QWidget):
         """ Display Line (Forgot password) """
         forgot_password = QLabel('<a href="#">Забыли пароль?</a>', self)
         forgot_password.move(80, 200)
-        # font = QFont()
-        # font.setPointSize(12)
-        # font.setStyleStrategy(QFont.PreferAntialias)
-        # forgot_password.setFont(font)
         forgot_password.linkActivated.connect(self.event_forgot_password)
 
     def event_sign_in(self):
@@ -84,13 +86,6 @@ class Authorization(QWidget):
         If they don't, display error messagebox. ("The username or password is incorrect.") """
         username = self.user_name.text()
         password = self.password.text()
-        if username == '':
-            # self.main_dialog = Main('oasis')
-            self.main_dialog = MainWindowUser('phokeboy')
-            # self.main_dialog = MainWindowUser('oasis')
-            # self.main_dialog = MainWindowUser('terror')
-            # self.main_dialog = MainWindowUser('phokeboy')
-            self.main_dialog.show()
         if username:
             verification = self.mariaUser.verification(username, password)
             if verification:
