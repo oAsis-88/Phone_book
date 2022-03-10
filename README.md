@@ -7,3 +7,5 @@ port = 3306 (можно любой удобный)
 Т.к. server mariadb - имеет host = localhost
 
 Схема БД, описана в файлах mariaDB_users.py и mariaDB_contacts.py
+
+Для открытия приложения нужно запустить файл application.py
